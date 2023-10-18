@@ -1,65 +1,89 @@
 package com.marcebits.demo.provider.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.marcebits.demo.dto.CategoriaProductoDto;
 import com.marcebits.demo.entity.CategoriaProductoEntity;
 import com.marcebits.demo.provider.CategoriaProductoProvider;
 import com.marcebits.demo.repository.CategoriaProductoRepository;
+import com.marcebits.demo.utils.ResponseDto;
 
 @Component
 public class CategoriaProductoProviderImpl implements CategoriaProductoProvider {
 
 	@Autowired
+    private ModelMapper modelMapper;
+	
+	@Autowired
 	private CategoriaProductoRepository productoCategoriaRepository;
 	
 	@Override
-	public List<CategoriaProductoEntity> getAll() {
-		return productoCategoriaRepository.findAll();
+	public ResponseDto<List<CategoriaProductoDto>> getAll() {
+		List<CategoriaProductoEntity> categoriasEntity = productoCategoriaRepository.findAll();
+		
+		List<CategoriaProductoDto> categoriasDto = new ArrayList<>();
+		
+		categoriasEntity.forEach(prod -> {
+			categoriasDto.add(
+					modelMapper.map(prod, CategoriaProductoDto.class)
+			);			
+		});
+		;
+		
+		return ResponseDto.success(categoriasDto);
 	}
 
 	@Override
-	public CategoriaProductoEntity getById(Long id) {
-		Optional<CategoriaProductoEntity> productoEntityOpt = productoCategoriaRepository.findById(id);
+	public ResponseDto<CategoriaProductoDto> getById(Long id) {
+		Optional<CategoriaProductoEntity> categoriaEntityOpt = productoCategoriaRepository.findById(id);
 		
-		if(productoEntityOpt.isEmpty()) {
-			return null;
+		if(categoriaEntityOpt.isEmpty()) {
+			return ResponseDto.fail("La categoria no existe");
 		}
 		
-		return productoEntityOpt.get();
-	}
-
-	@Override
-	public Long add(CategoriaProductoEntity newObject) {
-		CategoriaProductoEntity savedEntity = productoCategoriaRepository.save(newObject);
-		return savedEntity.getIdCategoria();
-	}
-
-	@Override
-	public String update(CategoriaProductoEntity newObject) {
-		Optional<CategoriaProductoEntity> productoEntityOpt = productoCategoriaRepository.findById(newObject.getIdCategoria());
+		CategoriaProductoDto categoriaDto = modelMapper.map(categoriaEntityOpt.get(), CategoriaProductoDto.class);
 		
-		if(productoEntityOpt.isEmpty()) {
-			return null;
+		return ResponseDto.success(categoriaDto);
+	}
+
+	@Override
+	public ResponseDto<Long> add(CategoriaProductoDto newObject) {
+		CategoriaProductoEntity categoriaEntity = modelMapper.map(newObject, CategoriaProductoEntity.class);
+		
+		CategoriaProductoEntity savedEntity = productoCategoriaRepository.save(categoriaEntity);
+		return ResponseDto.success(savedEntity.getIdCategoria());
+	}
+
+	@Override
+	public ResponseDto<String> update(Long id, CategoriaProductoDto newObject) {
+		Optional<CategoriaProductoEntity> categoriaEntityOpt = productoCategoriaRepository.findById(id);
+		
+		if(categoriaEntityOpt.isEmpty()) {
+			return ResponseDto.fail("La categoria no existe");
 		}
 		
-		productoCategoriaRepository.save(newObject);
-		return "Producto guardado con éxito";
+		CategoriaProductoEntity categoriaEntity = modelMapper.map(newObject, CategoriaProductoEntity.class);
+		productoCategoriaRepository.save(categoriaEntity);
+		
+		return ResponseDto.success("Categoria guardado con éxito");
 	}
 
 	@Override
-	public String delete(Long id) {
-		Optional<CategoriaProductoEntity> productoEntityOpt = productoCategoriaRepository.findById(id);
+	public ResponseDto<String> delete(Long id) {
+		Optional<CategoriaProductoEntity> categoriaEntityOpt = productoCategoriaRepository.findById(id);
 		
-		if(productoEntityOpt.isEmpty()) {
-			return null;
+		if(categoriaEntityOpt.isEmpty()) {
+			return ResponseDto.fail("La categoria no existe");
 		}
 		
 		productoCategoriaRepository.deleteById(id);
-		return "Producto eliminado con éxito";
+		return ResponseDto.success("Categoria eliminado con éxito");
 	}
 
 }

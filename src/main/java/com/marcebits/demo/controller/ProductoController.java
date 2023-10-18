@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcebits.demo.entity.ProductoEntity;
+import com.marcebits.demo.dto.ProductoDto;
 import com.marcebits.demo.provider.ProductoProvider;
+import com.marcebits.demo.utils.ResponseDto;
 
 @RestController
 @RequestMapping("/productos")
@@ -23,29 +24,29 @@ public class ProductoController {
 	private ProductoProvider productoProvider;
 	
 	@GetMapping("/")
-	public List<ProductoEntity> getAll() {
+	public ResponseDto<List<ProductoDto>> getAll() {
 		return productoProvider.getAll();
 	}
 	
 	@GetMapping("/{idProducto}")
-	public ProductoEntity getSingleProduct(@PathVariable("idProducto") Long idProducto) {
+	public ResponseDto<ProductoDto> getSingleProduct(@PathVariable("idProducto") Long idProducto) {
 		return productoProvider.getById(idProducto);
 	}
 	
 	@PostMapping("/")
-	public Long addProduct(@RequestBody ProductoEntity producto) {
+	public ResponseDto<Long> addProduct(@RequestBody ProductoDto producto) {
 		return productoProvider.add(producto);
 	}
 	
 	@PatchMapping("/{idProducto}")
-	public String editProduct(
-			@PathVariable("idProducto") Long ididProducto, 
-			@RequestBody ProductoEntity producto) {
-		return productoProvider.update(producto);
+	public ResponseDto<String> editProduct(
+			@PathVariable("idProducto") Long idProducto, 
+			@RequestBody ProductoDto producto) {
+		return productoProvider.update(idProducto, producto);
 	}
 	
 	@DeleteMapping("/{idProducto}")
-	public String deleteProduct(@PathVariable("idProducto") Long idProducto) {
+	public ResponseDto<String> deleteProduct(@PathVariable("idProducto") Long idProducto) {
 		return productoProvider.delete(idProducto);
 	}
 }

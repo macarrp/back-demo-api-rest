@@ -2,15 +2,17 @@ package com.marcebits.demo.provider;
 
 import java.util.List;
 
+import com.marcebits.demo.utils.ResponseDto;
+
 public interface BaseProvider<T> {
 
-	List<T> getAll();
+	ResponseDto<List<T>> getAll();
 	
-	T getById(Long id);
+	ResponseDto<T> getById(Long id);
 	
-	Long add(T newObject);
+	ResponseDto<Long> add(T newObject);
 	
-	String update(T newObject);
+	ResponseDto<String> update(Long id, T newObject);
 	
-	String delete(Long id);
+	ResponseDto<String> delete(Long id);
 }

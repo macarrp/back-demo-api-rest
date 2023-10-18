@@ -1,65 +1,89 @@
 package com.marcebits.demo.provider.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.marcebits.demo.dto.ProductoDto;
 import com.marcebits.demo.entity.ProductoEntity;
 import com.marcebits.demo.provider.ProductoProvider;
 import com.marcebits.demo.repository.ProductoRepository;
+import com.marcebits.demo.utils.ResponseDto;
 
 @Component
 public class ProductoProviderImpl implements ProductoProvider {
 
 	@Autowired
+    private ModelMapper modelMapper;
+	
+	@Autowired
 	private ProductoRepository productoRepository;
 	
 	@Override
-	public List<ProductoEntity> getAll() {
-		return productoRepository.findAll();
+	public ResponseDto<List<ProductoDto>> getAll() {
+		List<ProductoEntity> productosEntity = productoRepository.findAll();
+		
+		List<ProductoDto> productosDto = new ArrayList<>();
+		
+		productosEntity.forEach(prod -> {
+			productosDto.add(
+					modelMapper.map(prod, ProductoDto.class)
+			);			
+		});
+		;
+		
+		return ResponseDto.success(productosDto);
 	}
 
 	@Override
-	public ProductoEntity getById(Long id) {
+	public ResponseDto<ProductoDto> getById(Long id) {
 		Optional<ProductoEntity> productoEntityOpt = productoRepository.findById(id);
 		
 		if(productoEntityOpt.isEmpty()) {
-			return null;
+			return ResponseDto.fail("El producto no existe");
 		}
 		
-		return productoEntityOpt.get();
-	}
-
-	@Override
-	public Long add(ProductoEntity newObject) {
-		ProductoEntity savedEntity = productoRepository.save(newObject);
-		return savedEntity.getIdProducto();
-	}
-
-	@Override
-	public String update(ProductoEntity newObject) {
-		Optional<ProductoEntity> productoEntityOpt = productoRepository.findById(newObject.getIdProducto());
+		ProductoDto productoDto = modelMapper.map(productoEntityOpt.get(), ProductoDto.class);
 		
-		if(productoEntityOpt.isEmpty()) {
-			return null;
-		}
-		
-		productoRepository.save(newObject);
-		return "Producto guardado con éxito";
+		return ResponseDto.success(productoDto);
 	}
 
 	@Override
-	public String delete(Long id) {
+	public ResponseDto<Long> add(ProductoDto newObject) {
+		ProductoEntity productoEntity = modelMapper.map(newObject, ProductoEntity.class);
+		
+		ProductoEntity savedEntity = productoRepository.save(productoEntity);
+		return ResponseDto.success(savedEntity.getIdProducto());
+	}
+
+	@Override
+	public ResponseDto<String> update(Long id, ProductoDto newObject) {
 		Optional<ProductoEntity> productoEntityOpt = productoRepository.findById(id);
 		
 		if(productoEntityOpt.isEmpty()) {
-			return null;
+			return ResponseDto.fail("El producto no existe");
+		}
+		
+		ProductoEntity productoEntity = modelMapper.map(newObject, ProductoEntity.class);
+		
+		productoRepository.save(productoEntity);
+		return ResponseDto.success("Producto guardado con éxito");
+	}
+
+	@Override
+	public ResponseDto<String> delete(Long id) {
+		Optional<ProductoEntity> productoEntityOpt = productoRepository.findById(id);
+		
+		if(productoEntityOpt.isEmpty()) {
+			return ResponseDto.fail("El producto no existe");
 		}
 		
 		productoRepository.deleteById(id);
-		return "Producto eliminado con éxito";
+		return ResponseDto.success("Producto eliminado con éxito");
 	}
 
 }

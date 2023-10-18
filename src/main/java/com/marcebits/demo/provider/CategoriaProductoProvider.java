@@ -1,7 +1,7 @@
 package com.marcebits.demo.provider;
 
-import com.marcebits.demo.entity.CategoriaProductoEntity;
+import com.marcebits.demo.dto.CategoriaProductoDto;
 
-public interface CategoriaProductoProvider extends BaseProvider<CategoriaProductoEntity>{
+public interface CategoriaProductoProvider extends BaseProvider<CategoriaProductoDto>{
 	
 }

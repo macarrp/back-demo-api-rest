@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcebits.demo.entity.CategoriaProductoEntity;
+import com.marcebits.demo.dto.CategoriaProductoDto;
 import com.marcebits.demo.provider.CategoriaProductoProvider;
+import com.marcebits.demo.utils.ResponseDto;
 
 @RestController
 @RequestMapping("/categorias-producto")
@@ -23,29 +24,29 @@ public class CategoriaProductoController {
 	private CategoriaProductoProvider categoriaProductoProvider;
 	
 	@GetMapping("/")
-	public List<CategoriaProductoEntity> getAll() {
+	public ResponseDto<List<CategoriaProductoDto>> getAll() {
 		return categoriaProductoProvider.getAll();
 	}
 	
 	@GetMapping("/{idProducto}")
-	public CategoriaProductoEntity getSingleCategoria(@PathVariable("idProducto") Long idProducto) {
+	public ResponseDto<CategoriaProductoDto> getSingleCategoria(@PathVariable("idProducto") Long idProducto) {
 		return categoriaProductoProvider.getById(idProducto);
 	}
 	
 	@PostMapping("/")
-	public Long addCategoria(@RequestBody CategoriaProductoEntity categoria) {
+	public ResponseDto<Long> addCategoria(@RequestBody CategoriaProductoDto categoria) {
 		return categoriaProductoProvider.add(categoria);
 	}
 	
 	@PatchMapping("/{idCategoria}")
-	public String editCategoria(
+	public ResponseDto<String> editCategoria(
 			@PathVariable("idCategoria") Long idCategoria, 
-			@RequestBody CategoriaProductoEntity categoria) {
-		return categoriaProductoProvider.update(categoria);
+			@RequestBody CategoriaProductoDto categoria) {
+		return categoriaProductoProvider.update(idCategoria, categoria);
 	}
 	
 	@DeleteMapping("/{idCategoria}")
-	public String deleteCategoria(@PathVariable("idCategoria") Long idCategoria) {
+	public ResponseDto<String> deleteCategoria(@PathVariable("idCategoria") Long idCategoria) {
 		return categoriaProductoProvider.delete(idCategoria);
 	}
 }
