@@ -1,0 +1,17 @@
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\utils\ResponseDto.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\provider\ProductoProvider.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\entity\CategoriaProductoEntity.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\entity\ProductoEntity.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\provider\BaseProvider.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\provider\impl\CategoriaProductoProviderImpl.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\dto\CategoriaProductoDto.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\provider\impl\ProductoProviderImpl.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\controller\NetController.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\repository\CategoriaProductoRepository.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\config\ModelMapperConfig.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\provider\CategoriaProductoProvider.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\DemoApplication.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\repository\ProductoRepository.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\dto\ProductoDto.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\controller\CategoriaProductoController.java
+D:\Proyectos WEB\DEMO-API-REST\back-demo-api-rest\src\main\java\com\marcebits\demo\controller\ProductoController.java

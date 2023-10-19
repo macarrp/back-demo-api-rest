@@ -1,0 +1,17 @@
+com\marcebits\demo\provider\CategoriaProductoProvider.class
+com\marcebits\demo\provider\impl\ProductoProviderImpl.class
+com\marcebits\demo\dto\CategoriaProductoDto.class
+com\marcebits\demo\utils\ResponseDto.class
+com\marcebits\demo\DemoApplication.class
+com\marcebits\demo\controller\NetController.class
+com\marcebits\demo\config\ModelMapperConfig.class
+com\marcebits\demo\provider\impl\CategoriaProductoProviderImpl.class
+com\marcebits\demo\provider\ProductoProvider.class
+com\marcebits\demo\repository\ProductoRepository.class
+com\marcebits\demo\controller\ProductoController.class
+com\marcebits\demo\dto\ProductoDto.class
+com\marcebits\demo\provider\BaseProvider.class
+com\marcebits\demo\controller\CategoriaProductoController.class
+com\marcebits\demo\entity\CategoriaProductoEntity.class
+com\marcebits\demo\entity\ProductoEntity.class
+com\marcebits\demo\repository\CategoriaProductoRepository.class
