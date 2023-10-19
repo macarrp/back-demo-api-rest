@@ -14,7 +14,10 @@ import com.marcebits.demo.provider.ProductoProvider;
 import com.marcebits.demo.repository.ProductoRepository;
 import com.marcebits.demo.utils.ResponseDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class ProductoProviderImpl implements ProductoProvider {
 
 	@Autowired
@@ -40,7 +43,7 @@ public class ProductoProviderImpl implements ProductoProvider {
 	}
 
 	@Override
-	public ResponseDto<ProductoDto> getById(Long id) {
+	public ResponseDto<ProductoDto> getById(Long id) {		
 		Optional<ProductoEntity> productoEntityOpt = productoRepository.findById(id);
 		
 		if(productoEntityOpt.isEmpty()) {
